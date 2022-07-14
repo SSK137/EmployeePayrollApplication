@@ -1,8 +1,13 @@
 package com.example.employeepayrollapplication.Controller;
 
 import com.example.employeepayrollapplication.Model.EmployeeDetails;
+import com.example.employeepayrollapplication.Repository.EmployeePayrollRepository;
 import com.example.employeepayrollapplication.Services.EmployeePayrollServices;
+import com.example.employeepayrollapplication.dto.EmployeeDTO;
+import com.example.employeepayrollapplication.dto.ResponceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -11,6 +16,8 @@ import java.util.Optional;
 public class EmployeePayrollController {
     @Autowired
     EmployeePayrollServices employeePayrollServices;
+    @Autowired
+    EmployeePayrollRepository employeePayrollRepository;
     @GetMapping("/hello")
     public String getMessage(){
         return "Hello World !!!!";
@@ -38,8 +45,37 @@ public class EmployeePayrollController {
 
     //Delete Employee Details
     @DeleteMapping("/deleteMap/{id}")
-    public EmployeeDetails deleteDetails(@PathVariable Long id){
-        EmployeeDetails employeeDetails=employeePayrollServices.deleteDetails(id);
-        return employeeDetails;
+    public String  deleteDetails(@PathVariable Long id){
+        employeePayrollServices.deleteDetails(id);
+        return "Record Deleted";
+    }
+
+    //************************** DTO *******************************//
+
+    //GetMapping Employee Details
+    @GetMapping("/getdto/{id}")
+    public ResponseEntity<ResponceDTO> getdatabydto(@PathVariable Long id){
+        ResponceDTO responceDTO=new ResponceDTO("Employee Details : ",employeePayrollRepository.findById(id));
+        return new ResponseEntity<ResponceDTO>(responceDTO,HttpStatus.OK);
+    }
+    //PostMapping Employee Details
+    @PostMapping("/postdto")
+    public ResponseEntity<ResponceDTO> postdatabydto(@RequestBody EmployeeDTO employeeDTO){
+        EmployeeDTO employeeDTO1=new EmployeeDTO(1,employeeDTO);
+        ResponceDTO responceDTO=new ResponceDTO("Created Employee Data",employeeDTO1);
+        return  new ResponseEntity<ResponceDTO>(responceDTO,HttpStatus.OK);
+    }
+    //PutMapping Employee Details
+    @PutMapping("putdto")
+    public ResponseEntity<ResponceDTO> pustbydto(@RequestBody EmployeeDTO employeeDTO){
+        EmployeeDTO employeeDTO1=new EmployeeDTO(1,employeeDTO);
+        ResponceDTO responceDTO=new ResponceDTO("Updated Details",employeeDTO1);
+        return new ResponseEntity<ResponceDTO>(responceDTO,HttpStatus.OK);
+    }
+    //Delete Employee Details
+    @DeleteMapping("/deletedto/{id}")
+    public ResponseEntity<ResponceDTO> deletebydto(@PathVariable int id){
+        ResponceDTO responceDTO=new ResponceDTO("Details Deleted",id);
+        return new ResponseEntity<ResponceDTO>(responceDTO,HttpStatus.OK);
     }
 }
