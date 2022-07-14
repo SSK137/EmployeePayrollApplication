@@ -43,27 +43,27 @@ public class EmployeePayrollServices {
 //    }
 
     //****************************** Using DTO ****************************************
-    public List<EmployeeDetails> getEmployeePayrollData() {
-        List<EmployeeDetails> empDataList = new ArrayList<>();
-        empDataList.add(new EmployeeDetails(1, new EmployeeDTO("Saurabh Kodam", "Male", "HR", 35000)));
-        return empDataList;
-    }
+    List<EmployeeDetails> empDataList = new ArrayList<>();
     public EmployeeDetails getEmployeeById(int id) {
-        EmployeeDetails empData=new EmployeeDetails(1,new EmployeeDTO("Saurabh", "Male", "HR", 35000));
-        return empData;
+        return empDataList.get(id-1);
     }
-
-
     public EmployeeDetails createEmployeePayrollData(EmployeeDTO employeePayrollDTO) {
-        EmployeeDetails empData=new EmployeeDetails(1, new EmployeeDTO("Saurabh Kodam", "Male", "HR", 35000));
+        EmployeeDetails empData = new EmployeeDetails(empDataList.size()+1,employeePayrollDTO);
+        empDataList.add(empData);
         return empData;
     }
-
-    public EmployeeDetails editEmployee(EmployeeDTO employeePayrollDTO) {
-        EmployeeDetails empData=new EmployeeDetails(1,employeePayrollDTO);
+    public EmployeeDetails editEmployee(int id,EmployeeDTO employeePayrollDTO) {
+        EmployeeDetails empData=this.getEmployeeById(id);
+        empData.setName(employeePayrollDTO.name);
+        empData.setDepartment(employeePayrollDTO.department);
+        empData.setGender(employeePayrollDTO.gender);
+        empData.setSalary(employeePayrollDTO.salary);
+        empDataList.set(id-1,empData);
         return empData;
     }
-    public void deleteEmployee(int id) {
+    public void deleteEmployee(int id)
+    {
+        empDataList.remove(id-1);
     }
 
 }

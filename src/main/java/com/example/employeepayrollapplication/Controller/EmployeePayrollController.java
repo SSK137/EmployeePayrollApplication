@@ -51,27 +51,26 @@ public class EmployeePayrollController {
     @GetMapping("/getMap/{empId}")
     public ResponseEntity<ResponceDTO> getEmployeePayrollData(@PathVariable int empId) {
         EmployeeDetails employeeDetails= employeePayrollServices.getEmployeeById(empId);
-        ResponceDTO respDTO= new ResponceDTO("Get Call For ID Successful", employeeDetails);
+        ResponceDTO respDTO= new ResponceDTO("Employee Details :", employeeDetails);
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
     @PostMapping("/postMap")
     public ResponseEntity<ResponceDTO> addEmployeePayrollData(@RequestBody EmployeeDTO empPayrollDTO) {
         EmployeeDetails  empData= employeePayrollServices.createEmployeePayrollData(empPayrollDTO);
-        ResponceDTO respDTO= new ResponceDTO("Created Employee Payroll Data Successfully", empData);
+        ResponceDTO respDTO= new ResponceDTO("Created New Employee Details Successfully", empData);
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
-    @PutMapping("/putMap")
-    public ResponseEntity<ResponceDTO> updateEmployeePayrollData(@RequestBody EmployeeDTO empPayrollDTO) {
-        EmployeeDetails empData = employeePayrollServices.editEmployee(empPayrollDTO);
-        ResponceDTO respDTO= new ResponceDTO("Updated Employee Payroll Data Successfully", empData);
+    @PutMapping("/putMap/{id}")
+    public ResponseEntity<ResponceDTO> updateEmployeePayrollData(@PathVariable("id")int id,@RequestBody EmployeeDTO empPayrollDTO) {
+        EmployeeDetails empData= employeePayrollServices.editEmployee(id,empPayrollDTO);
+        ResponceDTO respDTO= new ResponceDTO("Updated Employee Details Successfully", empData);
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
     @DeleteMapping("/deleteMap/{empId}")
     public ResponseEntity<ResponceDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId)
     {
         employeePayrollServices.deleteEmployee(empId);
-        ResponceDTO respDTO= new ResponceDTO("Deleted Successfully", "Deleted id: "+empId);
+        ResponceDTO respDTO= new ResponceDTO("Deleted Employee Details Successfully", "Deleted id: "+empId);
         return new ResponseEntity<ResponceDTO> (respDTO, HttpStatus.OK);
-
     }
 }
