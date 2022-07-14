@@ -1,57 +1,47 @@
 package com.example.employeepayrollapplication.dto;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
 public class EmployeeDTO {
-    @Id
-    @Column(name = "id", nullable = false)
-    private Integer id;
 
-    String Name;
-    Long Salary;
+    public String name;
+    public String gender;
+    public String department;
+    public long salary;
 
-    public EmployeeDTO(int id, EmployeeDTO employeeDTO) {
-        this.Name=employeeDTO.Name;
-        this.Salary=employeeDTO.Salary;
-        this.id=id;
-    }
-
-    public EmployeeDTO(int id) {
-        this.id=id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public EmployeeDTO(String name, String gender, String department, long salary) {
+        this.name = name;
+        this.gender = gender;
+        this.department = department;
+        this.salary = salary;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public Long getSalary() {
-        return Salary;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSalary(Long salary) {
-        Salary = salary;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(long salary) {
+        this.salary = salary;
     }
 }
