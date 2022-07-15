@@ -1,5 +1,7 @@
 package com.example.employeepayrollapplication.Services;
 
+import com.example.employeepayrollapplication.ExceptionHandler.CustomException;
+import com.example.employeepayrollapplication.ExceptionHandler.EmployeePayrollException;
 import com.example.employeepayrollapplication.Model.EmployeeDetails;
 import com.example.employeepayrollapplication.Repository.EmployeePayrollRepository;
 import com.example.employeepayrollapplication.dto.EmployeeDTO;
@@ -44,7 +46,10 @@ public class EmployeePayrollServices {
     //****************************** Using DTO ****************************************
     List<EmployeeDetails> empDataList = new ArrayList<>();
     public EmployeeDetails getEmployeeById(int id) {
-        return empDataList.get(id-1);
+        return empDataList.stream()
+                .filter(empData -> empData.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new EmployeePayrollException("Employee not found!"));
     }
     public List<EmployeeDetails> getAllDetails(){
         return empDataList;

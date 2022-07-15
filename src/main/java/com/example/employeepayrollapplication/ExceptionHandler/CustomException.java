@@ -23,4 +23,9 @@ public class CustomException {
         ResponceDTO responceDTO = new ResponceDTO("Exception while processing REST request", errMsg);
         return new ResponseEntity<>(responceDTO, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(EmployeePayrollException.class)
+    public ResponseEntity<ResponceDTO> handleEmployeePayrollException(EmployeePayrollException exception){
+        ResponceDTO respDTO = new ResponceDTO("Exception while processing REST request",exception.getMessage());
+        return new ResponseEntity<>(respDTO, HttpStatus.BAD_REQUEST);
+    }
 }

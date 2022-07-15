@@ -6,6 +6,8 @@ import lombok.Data;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +17,10 @@ public class EmployeeDTO {
     public String name;
     @NotEmpty(message = "Employee Gender cannot Empty")
     public String gender;
-    public String department;
+    public List<String > department;
     @Min(value = 500, message = "Min Wage should be more than 500")
     public long salary;
-
+    public LocalDate startDate;
+    public String note;
+    public String profilePic;
 }

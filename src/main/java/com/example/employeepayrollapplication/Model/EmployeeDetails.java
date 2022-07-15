@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,8 +23,12 @@ public class EmployeeDetails {
 
     String name;
     Long salary;
-    String department;
+    @ElementCollection
+    List<String> department;
     String gender;
+    LocalDate startDate;
+    String note;
+    String profilePic;
 
     public EmployeeDetails(int id, EmployeeDTO employeeDTO) {
         this.id=id;
@@ -29,5 +36,8 @@ public class EmployeeDetails {
         this.department=employeeDTO.department;
         this.gender=employeeDTO.gender;
         this.salary=employeeDTO.salary;
+        this.startDate=employeeDTO.startDate;
+        this.profilePic=employeeDTO.profilePic;
+        this.note=employeeDTO.note;
     }
 }
