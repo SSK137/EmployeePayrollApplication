@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @RestController
 public class EmployeePayrollController {
     @Autowired
@@ -48,6 +51,12 @@ public class EmployeePayrollController {
     //************************** DTO *******************************//
 
     //GetMapping Employee Details
+    @GetMapping("/getall")
+    public ResponseEntity<ResponceDTO> getalldetails(){
+        List<EmployeeDetails> employeeDetails=employeePayrollServices.getAllDetails();
+        ResponceDTO responceDTO=new ResponceDTO("All Employee Details",employeeDetails);
+        return new ResponseEntity<ResponceDTO>(responceDTO,HttpStatus.OK);
+    }
     @GetMapping("/getMap/{empId}")
     public ResponseEntity<ResponceDTO> getEmployeePayrollData(@PathVariable int empId) {
         EmployeeDetails employeeDetails= employeePayrollServices.getEmployeeById(empId);
@@ -55,7 +64,7 @@ public class EmployeePayrollController {
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
     @PostMapping("/postMap")
-    public ResponseEntity<ResponceDTO> addEmployeePayrollData(@RequestBody EmployeeDTO empPayrollDTO) {
+    public ResponseEntity<ResponceDTO> addEmployeePayrollData(@Valid @RequestBody EmployeeDTO empPayrollDTO) {
         EmployeeDetails  empData= employeePayrollServices.createEmployeePayrollData(empPayrollDTO);
         ResponceDTO respDTO= new ResponceDTO("Created New Employee Details Successfully", empData);
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
