@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeePayrollServices {
@@ -47,8 +46,11 @@ public class EmployeePayrollServices {
     public EmployeeDetails getEmployeeById(int id) {
         return empDataList.get(id-1);
     }
-    public EmployeeDetails createEmployeePayrollData(EmployeeDTO employeePayrollDTO) {
-        EmployeeDetails empData = new EmployeeDetails(empDataList.size()+1,employeePayrollDTO);
+    public List<EmployeeDetails> getAllDetails(){
+        return empDataList;
+    }
+    public EmployeeDetails createEmployeePayrollData(EmployeeDTO employeeDTO) {
+        EmployeeDetails empData = new EmployeeDetails(empDataList.size()+1,employeeDTO);
         empDataList.add(empData);
         return empData;
     }
