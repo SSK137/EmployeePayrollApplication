@@ -1,16 +1,18 @@
 package com.example.employeepayrollapplication;
-
-import com.example.employeepayrollapplication.Services.EmployeePayrollServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @Slf4j
 @SpringBootApplication
 public class EmployeePayrollApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EmployeePayrollApplication.class, args);
+        ApplicationContext context = SpringApplication.run(EmployeePayrollApplication.class, args);
         System.out.println("Welcome to Employee Payroll Application");
         log.info("***************Using Lombok Library for Logging***********************");
+
+        log.info("Employee Payroll App Started in {} Environment",
+                context.getEnvironment().getProperty("environment"));
     }
 }
