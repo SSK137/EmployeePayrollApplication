@@ -1,4 +1,4 @@
-package com.example.employeepayrollapplication.ExceptionHandler;
+package com.example.employeepayrollapplication.exceptionhandler;
 
 import com.example.employeepayrollapplication.dto.ResponceDTO;
 import lombok.extern.slf4j.Slf4j;

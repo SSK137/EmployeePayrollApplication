@@ -1,9 +1,8 @@
-package com.example.employeepayrollapplication.Services;
+package com.example.employeepayrollapplication.services;
 
-import com.example.employeepayrollapplication.ExceptionHandler.CustomException;
-import com.example.employeepayrollapplication.ExceptionHandler.EmployeePayrollException;
-import com.example.employeepayrollapplication.Model.EmployeeDetails;
-import com.example.employeepayrollapplication.Repository.EmployeePayrollRepository;
+import com.example.employeepayrollapplication.exceptionhandler.EmployeePayrollException;
+import com.example.employeepayrollapplication.model.EmployeeDetails;
+import com.example.employeepayrollapplication.repository.EmployeePayrollRepository;
 import com.example.employeepayrollapplication.dto.EmployeeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EmployeePayrollServices {
+public class EmployeePayrollServices implements EmployeePayrollServicesInterface{
     @Autowired
     EmployeePayrollRepository employeePayrollRepository;
-
-    ArrayList<EmployeeDetails> EmployeeArrayList;
 
 //    public EmployeeDetails postDetails(EmployeeDTO employeeDTO){
 //        EmployeeDetails employeeDetails1=new EmployeeDetails(employeeDTO);
@@ -55,8 +52,9 @@ public class EmployeePayrollServices {
         return empDataList;
     }
     public EmployeeDetails createEmployeePayrollData(EmployeeDTO employeeDTO) {
-        EmployeeDetails empData = new EmployeeDetails(empDataList.size()+1,employeeDTO);
-        empDataList.add(empData);
+        EmployeeDetails empData = new EmployeeDetails(employeeDTO);
+        //empDataList.add(empData);
+        employeePayrollRepository.save(empData);
         return empData;
     }
     public EmployeeDetails editEmployee(int id,EmployeeDTO employeePayrollDTO) {
@@ -72,5 +70,4 @@ public class EmployeePayrollServices {
     {
         empDataList.remove(id-1);
     }
-
 }
