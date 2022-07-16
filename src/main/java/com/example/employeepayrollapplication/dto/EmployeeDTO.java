@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
+public @ToString class EmployeeDTO {
 
     @NotNull(message = "Employee Name cannot be null")
     @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Employee Name Invalid")
@@ -23,7 +23,7 @@ public class EmployeeDTO {
     public String gender;
     @JsonFormat(pattern = "dd MM yyyy")
     @NotNull(message = "startDate should Not be Empty")
-    @PastOrPresent(message = "startDate should be past or todays date")
+    @PastOrPresent(message = "startDate should be past or present date")
     public LocalDate startDate;
     @NotBlank(message = "Note cannot be Empty")
     public String note;
