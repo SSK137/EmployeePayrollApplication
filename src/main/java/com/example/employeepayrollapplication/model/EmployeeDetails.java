@@ -14,12 +14,13 @@ import java.util.List;
 @Table(name = "employee_payroll")
 public @Data class EmployeeDetails {
     @Id
-    @Column(name = "emp_id")
     @GeneratedValue
-    int id;
+    @Column(name = "id", nullable = false)
+    private int id;
+
     @Column(name = "name")
     private String name;
-    private Long salary;
+    private double salary;
     private String gender;
     private String profilePic;
     private String note;
@@ -29,7 +30,6 @@ public @Data class EmployeeDetails {
     public List<String> department;
 
     public EmployeeDetails(EmployeeDTO employeePayrollDTO) {
-        this.id=id;
         this.name= employeePayrollDTO.name;
         this.department=employeePayrollDTO.department;
         this.gender=employeePayrollDTO.gender;
@@ -39,4 +39,23 @@ public @Data class EmployeeDetails {
         this.note=employeePayrollDTO.note;
     }
 
+    public EmployeeDetails(int id, EmployeeDTO employeeDTO) {
+        this.id=id;
+        this.name= employeeDTO.name;
+        this.department=employeeDTO.department;
+        this.gender=employeeDTO.gender;
+        this.salary=employeeDTO.salary;
+        this.startDate=employeeDTO.startDate;
+        this.profilePic=employeeDTO.profilePic;
+        this.note=employeeDTO.note;
+    }
+
+    public EmployeeDetails(int id) {
+        this.id=id;
+    }
+
+    public EmployeeDetails(EmployeeDTO employeeDTO, int id) {
+        this.id=id;
+
+    }
 }

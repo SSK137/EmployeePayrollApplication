@@ -1,6 +1,5 @@
 package com.example.employeepayrollapplication.services;
 
-import com.example.employeepayrollapplication.exceptionhandler.EmployeePayrollException;
 import com.example.employeepayrollapplication.model.EmployeeDetails;
 import com.example.employeepayrollapplication.repository.EmployeePayrollRepository;
 import com.example.employeepayrollapplication.dto.EmployeeDTO;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeePayrollServices implements EmployeePayrollServicesInterface{
@@ -41,33 +41,27 @@ public class EmployeePayrollServices implements EmployeePayrollServicesInterface
 //    }
 
     //****************************** Using DTO ****************************************
-    List<EmployeeDetails> empDataList = new ArrayList<>();
-    public EmployeeDetails getEmployeeById(int id) {
-        return empDataList.stream()
-                .filter(empData -> empData.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EmployeePayrollException("Employee not found!"));
+    //List<EmployeeDetails> empDataList = new ArrayList<>();
+    public Optional<EmployeeDetails> getEmployeeById(int id) {
+        return employeePayrollRepository.findById(id);
     }
     public List<EmployeeDetails> getAllDetails(){
-        return empDataList;
+        return employeePayrollRepository.findAll();
     }
     public EmployeeDetails createEmployeePayrollData(EmployeeDTO employeeDTO) {
         EmployeeDetails empData = new EmployeeDetails(employeeDTO);
-        //empDataList.add(empData);
         employeePayrollRepository.save(empData);
         return empData;
     }
     public EmployeeDetails editEmployee(int id,EmployeeDTO employeePayrollDTO) {
-        EmployeeDetails empData=this.getEmployeeById(id);
-        empData.setName(employeePayrollDTO.name);
-        empData.setDepartment(employeePayrollDTO.department);
-        empData.setGender(employeePayrollDTO.gender);
-        empData.setSalary(employeePayrollDTO.salary);
-        empDataList.set(id-1,empData);
-        return empData;
+        EmployeeDetails employeeDetails=new EmployeeDetails(id,employeePayrollDTO);
+        employeePayrollRepository.save(employeeDetails);
+        return employeeDetails;
     }
-    public void deleteEmployee(int id)
-    {
-        empDataList.remove(id-1);
+
+    public String deleteEmployee(int id) {
+        EmployeeDetails employeeDetails=new EmployeeDetails(id);
+        employeePayrollRepository.delete(employeeDetails);
+        return "Employee Details Deleted Successfully..!!";
     }
 }
