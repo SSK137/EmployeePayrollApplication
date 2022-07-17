@@ -18,7 +18,7 @@ public @ToString class EmployeeDTO {
     @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Employee Name Invalid")
     public String name;
     @Min(value = 500, message = "Min Wage should be more than 500")
-    public long salary;
+    public double salary;
     @Pattern(regexp = "male|female", message = "Gender needs to be male or female")
     public String gender;
     @JsonFormat(pattern = "dd MM yyyy")

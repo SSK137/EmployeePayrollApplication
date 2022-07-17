@@ -12,7 +12,4 @@ public class ResponceDTO {
         this.message = message;
         this.data = data;
     }
-
-    public ResponceDTO() {
-    }
 }

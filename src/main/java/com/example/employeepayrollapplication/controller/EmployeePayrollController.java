@@ -1,7 +1,6 @@
 package com.example.employeepayrollapplication.controller;
 
 import com.example.employeepayrollapplication.model.EmployeeDetails;
-import com.example.employeepayrollapplication.services.EmployeePayrollServices;
 import com.example.employeepayrollapplication.dto.EmployeeDTO;
 import com.example.employeepayrollapplication.dto.ResponceDTO;
 import com.example.employeepayrollapplication.services.EmployeePayrollServicesInterface;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class EmployeePayrollController {
@@ -58,10 +58,9 @@ public class EmployeePayrollController {
         ResponceDTO responceDTO=new ResponceDTO("All Employee Details",employeeDetails);
         return new ResponseEntity<ResponceDTO>(responceDTO,HttpStatus.OK);
     }
-    @GetMapping("/getMap/{empId}")
-    public ResponseEntity<ResponceDTO> getEmployeePayrollData(@PathVariable int empId) {
-        EmployeeDetails employeeDetails= employeePayrollServicesInterface.getEmployeeById(empId);
-        ResponceDTO respDTO= new ResponceDTO("Employee Details :", employeeDetails);
+    @GetMapping("/getMap/{id}")
+    public ResponseEntity<ResponceDTO> getEmployeePayrollData(@PathVariable int id) {
+        ResponceDTO respDTO= new ResponceDTO("Employee Details :", employeePayrollServicesInterface.getEmployeeById(id));
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
     @PostMapping("/postMap")
@@ -71,24 +70,13 @@ public class EmployeePayrollController {
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
     @PutMapping("/putMap/{id}")
-    public ResponseEntity<ResponceDTO> updateEmployeePayrollData(@PathVariable("id")int id,@RequestBody EmployeeDTO empPayrollDTO) {
-        EmployeeDetails empData= employeePayrollServicesInterface.editEmployee(id,empPayrollDTO);
-        ResponceDTO respDTO= new ResponceDTO("Updated Employee Details Successfully", empData);
+    public ResponseEntity<ResponceDTO> updateEmployeePayrollData(@PathVariable int id,@RequestBody EmployeeDTO empPayrollDTO) {
+        ResponceDTO respDTO= new ResponceDTO("Updated Employee Details Successfully", employeePayrollServicesInterface.editEmployee(id,empPayrollDTO));
         return new ResponseEntity<ResponceDTO>(respDTO, HttpStatus.OK);
     }
-    @DeleteMapping("/deleteMap/{empId}")
-    public ResponseEntity<ResponceDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId)
-    {
-        employeePayrollServicesInterface.deleteEmployee(empId);
-        ResponceDTO respDTO= new ResponceDTO("Deleted Employee Details Successfully", "Deleted id: "+empId);
+    @DeleteMapping("/deleteMap/{id}")
+    public ResponseEntity<ResponceDTO> deleteEmployeePayrollData(@PathVariable int id) {
+        ResponceDTO respDTO= new ResponceDTO("Deleted Employee Details Successfully", employeePayrollServicesInterface.deleteEmployee(id));
         return new ResponseEntity<ResponceDTO> (respDTO, HttpStatus.OK);
-    }
-    @GetMapping("/getbypath/{name}")
-    public String getbypaths(@PathVariable String name){
-        return "Hello.."+name;
-    }
-    @GetMapping("/getbykey")
-    public String getbykey(@RequestParam String name){
-        return "Hello.. "+name;
     }
 }
